@@ -18,7 +18,7 @@ jobs:
         ORIGIN_HOST=${{ secrets.DATABRICKS_ORIGIN_HOST }}
         ORIGIN_TOKEN=${{ secrets.DATABRICKS_ORIGIN_TOKEN }}
         NOTEBOOK_BASE="/Workspace/Users/jorgee@osom.biz/TrabajoFinal/proceso"
-        NOTEBOOKS=("1.Preparacion_Ambiente" "2.Ingesta"  "3.TransformA" "4.PowerBI" "5.Grants_Medallion")
+        NOTEBOOKS=("1.Preparacion_Ambiente" "2.Ingesta"  "3.Transforma" "4.PowerBI" "5.Grants_Medallion")
         mkdir -p notebooks_to_deploy
         for nb in "${NOTEBOOKS[@]}"; do
           echo "Exportando $nb en modo raw....."
