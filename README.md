@@ -55,6 +55,6 @@ Según la estructura del repo, encontrarás materiales como:
 Este proyecto mezcla dos cosas que me entusiasman:
 
 - La potencia de **Databricks** para trabajar con datos reales.
-- La nostalgia de Pokémon, que en casa siempre fue excusa para compartir tiempo y diversión.
+- La nostalgia de Pokémon, que en casa siempre fue excusa para compartir con mis hijos tiempo y diversión.
 
 Si estás revisando este trabajo: gracias por pasarte por aquí.
