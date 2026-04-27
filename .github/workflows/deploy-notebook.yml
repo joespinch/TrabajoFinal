@@ -18,7 +18,7 @@ jobs:
         ORIGIN_HOST=${{ secrets.DATABRICKS_ORIGIN_HOST }}
         ORIGIN_TOKEN=${{ secrets.DATABRICKS_ORIGIN_TOKEN }}
         NOTEBOOK_BASE="/Workspace/Users/jorgee@osom.biz/TrabajoFinal/proceso"
-        NOTEBOOKS=("1.Preparacion_Ambiente" "2.Ingest_circuits_data" "2.Ingest_Constructors" "2.Ingest_racing_data" "3.Transform" "4.Load")
+        NOTEBOOKS=("1.Preparacion_Ambiente" "2.Ingesta"  "3.TransformA" "4.PowerBI" "5.Grants_Medallion")
         mkdir -p notebooks_to_deploy
         for nb in "${NOTEBOOKS[@]}"; do
           echo "Exportando $nb en modo raw....."
@@ -87,7 +87,7 @@ jobs:
         DEST_HOST=${{ secrets.DATABRICKS_DEST_HOST }}
         DEST_TOKEN=${{ secrets.DATABRICKS_DEST_TOKEN }}
         DEST_BASE="/smartdata/scripts/main"
-        NOTEBOOKS=("1.Preparacion_Ambiente" "2.Ingest_circuits_data" "2.Ingest_Constructors" "2.Ingest_racing_data" "3.Transform" "4.Load")
+        NOTEBOOKS=("1.Preparacion_Ambiente" "2.Ingesta"  "3.Transforma" "4.PowerBI" "5.Grants_Medallion")
         
         echo "🔍 Validando que todos los notebooks existan en destino..."
         validation_errors=0
