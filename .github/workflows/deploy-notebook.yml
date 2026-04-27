@@ -197,7 +197,7 @@ jobs:
                   "catalogo": "catalog_au"
                   }
               },
-              "job_cluster_key": "serverless_cluster",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 2
             },
@@ -214,7 +214,7 @@ jobs:
                   "storageName": "adlsproyectoje"
                   }
               },
-              "job_cluster_key": "serverless_cluster",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 2,
               "depends_on": [
@@ -235,7 +235,7 @@ jobs:
                   "esquema_sink": "silver"
                 }
               },
-              "job_cluster_key": "serverless_cluster",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 2,
               "depends_on": [
@@ -256,7 +256,7 @@ jobs:
                   "esquema_sink": "golden"
                 }
               },
-              "job_cluster_key": "serverless_cluster",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 2,
               "depends_on": [
@@ -272,7 +272,7 @@ jobs:
                 "notebook_path": "/smartdata/scripts/main/5.Grants_Medallion",
                 "source": "WORKSPACE"
               },
-              "job_cluster_key": "serverless_cluster",
+              "existing_cluster_id": "$CLUSTER_ID",
               "timeout_seconds": 3600,
               "max_retries": 2,
               "depends_on": [
