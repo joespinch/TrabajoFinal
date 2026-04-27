@@ -17,7 +17,7 @@ jobs:
       run: |
         ORIGIN_HOST=${{ secrets.DATABRICKS_ORIGIN_HOST }}
         ORIGIN_TOKEN=${{ secrets.DATABRICKS_ORIGIN_TOKEN }}
-        NOTEBOOK_BASE="/Workspace/Users/jorgee@osom.biz/ProyectoDatabricks/proceso"
+        NOTEBOOK_BASE="/Workspace/Users/jorgee@osom.biz/TrabajoFinal/proceso"
         NOTEBOOKS=("1.Preparacion_Ambiente" "2.Ingest_circuits_data" "2.Ingest_Constructors" "2.Ingest_racing_data" "3.Transform" "4.Load")
         mkdir -p notebooks_to_deploy
         for nb in "${NOTEBOOKS[@]}"; do
@@ -193,7 +193,8 @@ jobs:
                 "notebook_path": "/smartdata/scripts/main/1.Preparacion_Ambiente",
                 "source": "WORKSPACE",
                   "base_parameters": {
-                  "storageName": "adlsproyectoje"
+                  "storageName": "adlsproyectoje",
+                  "catalogo": "catalog_au"
                   }
               },
               "job_cluster_key": "serverless_cluster",
@@ -201,10 +202,10 @@ jobs:
               "max_retries": 2
             },
             {
-              "task_key": "Ingest_circuits_data",
-              "description": "Ejecuta notebook 2.Ingest_circuits_data",
+              "task_key": "Ingesta",
+              "description": "Ejecuta notebook 2.Ingesta",
               "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/2.Ingest_circuits_data",
+                "notebook_path": "/smartdata/scripts/main/2.Ingesta",
                 "source": "WORKSPACE",
                   "base_parameters": {
                   "container": "raw",
@@ -223,54 +224,10 @@ jobs:
               ]
             },
             {
-              "task_key": "Ingest_Constructors",
-              "description": "Ejecuta notebook 2.Ingest_Constructors",
+              "task_key": "Transforma",
+              "description": "Ejecuta notebook 3.Transforma",
               "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/2.Ingest_Constructors",
-                "source": "WORKSPACE",
-                  "base_parameters": {
-                  "container": "raw",
-                  "catalogo": "catalog_au",
-                  "esquema": "bronze",
-                  "storageName": "adlsproyectoje"
-                  }
-              },
-              "job_cluster_key": "serverless_cluster",
-              "timeout_seconds": 3600,
-              "max_retries": 2,
-              "depends_on": [
-                {
-                  "task_key": "Preparacion_Ambiente"
-                }
-              ]
-            },
-            {
-              "task_key": "Ingest_racing_data",
-              "description": "Ejecuta notebook 2.Ingest_racing_data",
-              "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/2.Ingest_racing_data",
-                "source": "WORKSPACE",
-                  "base_parameters": {
-                  "container": "raw",
-                  "catalogo": "catalog_au",
-                  "esquema": "bronze",
-                  "storageName": "adlsproyectoje"
-                  }
-              },
-              "job_cluster_key": "serverless_cluster",
-              "timeout_seconds": 3600,
-              "max_retries": 2,
-              "depends_on": [
-                {
-                  "task_key": "Preparacion_Ambiente"
-                }
-              ]
-            },
-            {
-              "task_key": "Transform",
-              "description": "Ejecuta notebook 3.Transform",
-              "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/3.Transform",
+                "notebook_path": "/smartdata/scripts/main/3.Transforma",
                 "source": "WORKSPACE",
                   "base_parameters": {
                   "catalogo": "catalog_au",
@@ -283,21 +240,15 @@ jobs:
               "max_retries": 2,
               "depends_on": [
                 {
-                  "task_key": "Ingest_circuits_data"
-                },
-                {
-                  "task_key": "Ingest_Constructors"
-                },
-                {
-                  "task_key": "Ingest_racing_data"
+                  "task_key": "Ingesta"
                 }
               ]
             },
             {
-              "task_key": "Load",
-              "description": "Ejecuta notebook 4.Load",
+              "task_key": "PowerBI",
+              "description": "Ejecuta notebook 4.PowerBI",
               "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/4.Load",
+                "notebook_path": "/smartdata/scripts/main/4.PowerBI",
                 "source": "WORKSPACE",
                   "base_parameters": {
                   "catalogo": "catalog_au",
@@ -310,7 +261,7 @@ jobs:
               "max_retries": 2,
               "depends_on": [
                 {
-                  "task_key": "Transform"
+                  "task_key": "Transforma"
                 }
               ]
             },
@@ -326,7 +277,7 @@ jobs:
               "max_retries": 2,
               "depends_on": [
                 {
-                  "task_key": "Load"
+                  "task_key": "PowerBI"
                 }
               ]
             }
