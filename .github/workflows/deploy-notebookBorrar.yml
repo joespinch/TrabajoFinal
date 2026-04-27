@@ -122,129 +122,130 @@ jobs:
         
         # Crear el JSON del workflow usando cluster existente
         cat > workflow_config.json << EOF
-        {
-          "name": "WF_ADB",
-          "format": "MULTI_TASK",
-          "tasks": [
-            {
-              "task_key": "Preparacion_Ambiente",
-              "description": "Ejecuta notebook 1.Preparacion_Ambiente",
-              "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/1.Preparacion_Ambiente",
-                "source": "WORKSPACE",
-                  "base_parameters": {
-                  "storageName": "adlsproyectoje",
-                  "catalogo": "catalog_au"
-                  }
-              },
-              "existing_cluster_id": "$CLUSTER_ID",
-              "timeout_seconds": 3600,
-              "max_retries": 2
-            },
-            {
-              "task_key": "Ingesta",
-              "description": "Ejecuta notebook 2.Ingesta",
-              "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/2.Ingesta",
-                "source": "WORKSPACE",
-                  "base_parameters": {
-                  "container": "raw",
-                  "catalogo": "catalog_au",
-                  "esquema": "bronze",
-                  "storageName": "adlsproyectoje"
-                  }
-              },
-              "existing_cluster_id": "$CLUSTER_ID",
-              "timeout_seconds": 3600,
-              "max_retries": 2,
-              "depends_on": [
-                {
-                  "task_key": "Preparacion_Ambiente"
-                }
-              ]
-            },
-            {
-              "task_key": "Transforma",
-              "description": "Ejecuta notebook 3.Transforma",
-              "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/3.Transforma",
-                "source": "WORKSPACE",
-                  "base_parameters": {
-                  "catalogo": "catalog_au",
-                  "esquema": "silver"
-                }
-              },
-              "existing_cluster_id": "$CLUSTER_ID",
-              "timeout_seconds": 3600,
-              "max_retries": 2,
-              "depends_on": [
-                {
-                  "task_key": "Ingesta"
-                }
-              ]
-            },
-            {
-              "task_key": "PowerBI",
-              "description": "Ejecuta notebook 4.PowerBI",
-              "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/4.PowerBI",
-                "source": "WORKSPACE",
-                  "base_parameters": {
-                  "catalogo": "catalog_au",
-                  "esquema": "golden",
-                  "container": "silver"
-                }
-              },
-              "existing_cluster_id": "$CLUSTER_ID",
-              "timeout_seconds": 3600,
-              "max_retries": 2,
-              "depends_on": [
-                {
-                  "task_key": "Transforma"
-                }
-              ]
-            },
-            {
-              "task_key": "Grants_Medallion",
-              "description": "Ejecuta notebook 5.Grants_Medallion",
-              "notebook_task": {
-                "notebook_path": "/smartdata/scripts/main/5.Grants_Medallion",
-                "source": "WORKSPACE",
-                  "base_parameters": {
-                  "catalogo": "catalog_au",
-                  "usuario": "jorgee@osom.biz
-              },
-              "existing_cluster_id": "$CLUSTER_ID",
-              "timeout_seconds": 3600,
-              "max_retries": 2,
-              "depends_on": [
-                {
-                  "task_key": "PowerBI"
-                }
-              ]
-            }
-          ],
-          "schedule": {
-            "quartz_cron_expression": "0 0 8 * * ?",
-            "timezone_id": "America/Lima",
-            "pause_status": "PAUSED"
-          },
-          "email_notifications": {
-            "on_failure": [],
-            "on_success": [],
-            "no_alert_for_skipped_runs": false
-          },
-          "webhook_notifications": {},
-          "timeout_seconds": 7200,
-          "max_concurrent_runs": 1,
-          "tags": {
-            "environment": "production",
-            "created_by": "github_actions",
-            "project": "automated_deployment",
-            "cluster_used": "cluster_SD"
-          }
+
+{
+  "name": "WF_ADB",
+  "format": "MULTI_TASK",
+  "tasks": [
+    {
+      "task_key": "Preparacion_Ambiente",
+      "description": "Ejecuta notebook 1.Preparacion_Ambiente",
+      "notebook_task": {
+        "notebook_path": "/smartdata/scripts/main/1.Preparacion_Ambiente",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "storageName": "adlsproyectoje",
+          "catalogo": "catalog_au"
         }
-        EOF
+      },
+      "existing_cluster_id": "$CLUSTER_ID",
+      "timeout_seconds": 3600,
+      "max_retries": 2
+    },
+    {
+      "task_key": "Ingesta",
+      "description": "Ejecuta notebook 2.Ingesta",
+      "notebook_task": {
+        "notebook_path": "/smartdata/scripts/main/2.Ingesta",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "container": "raw",
+          "catalogo": "catalog_au",
+          "esquema": "bronze",
+          "storageName": "adlsproyectoje"
+        }
+      },
+      "existing_cluster_id": "$CLUSTER_ID",
+      "timeout_seconds": 3600,
+      "max_retries": 2,
+      "depends_on": [
+        {
+          "task_key": "Preparacion_Ambiente"
+        }
+      ]
+    },
+    {
+      "task_key": "Transforma",
+      "description": "Ejecuta notebook 3.Transforma",
+      "notebook_task": {
+        "notebook_path": "/smartdata/scripts/main/3.Transforma",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "catalogo": "catalog_au",
+          "esquema": "silver"
+        }
+      },
+      "existing_cluster_id": "$CLUSTER_ID",
+      "timeout_seconds": 3600,
+      "max_retries": 2,
+      "depends_on": [
+        {
+          "task_key": "Ingesta"
+        }
+      ]
+    },
+    {
+      "task_key": "PowerBI",
+      "description": "Ejecuta notebook 4.PowerBI",
+      "notebook_task": {
+        "notebook_path": "/smartdata/scripts/main/4.PowerBI",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "catalogo": "catalog_au",
+          "esquema": "golden",
+          "container": "silver"
+        }
+      },
+      "existing_cluster_id": "$CLUSTER_ID",
+      "timeout_seconds": 3600,
+      "max_retries": 2,
+      "depends_on": [
+        {
+          "task_key": "Transforma"
+        }
+      ]
+    },
+    {
+      "task_key": "Grants_Medallion",
+      "description": "Ejecuta notebook 5.Grants_Medallion",
+      "notebook_task": {
+        "notebook_path": "/smartdata/scripts/main/5.Grants_Medallion",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "catalogo": "catalog_au",
+          "usuario": "jorgee@osom.biz"
+        }
+      },
+      "existing_cluster_id": "$CLUSTER_ID",
+      "timeout_seconds": 3600,
+      "max_retries": 2,
+      "depends_on": [
+        {
+          "task_key": "PowerBI"
+        }
+      ]
+    }
+  ],
+  "schedule": {
+    "quartz_cron_expression": "0 0 8 * * ?",
+    "timezone_id": "America/Lima",
+    "pause_status": "PAUSED"
+  },
+  "email_notifications": {
+    "on_failure": [],
+    "on_success": [],
+    "no_alert_for_skipped_runs": false
+  },
+  "webhook_notifications": {},
+  "timeout_seconds": 7200,
+  "max_concurrent_runs": 1,
+  "tags": {
+    "environment": "production",
+    "created_by": "github_actions",
+    "project": "automated_deployment",
+    "cluster_used": "cluster_SD"
+  }
+}        EOF
         
         # Crear el workflow
         create_response=$(curl -s -X POST \
